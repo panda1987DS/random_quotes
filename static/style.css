@@ -45,10 +45,10 @@ h1 {
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: 2px solid #888;
-    border-radius: 5px;
+    padding: 2px 4px;
+    font-size: 14px;
+    border: 0px solid #888;
+    border-radius: 1px;
     background-color: white;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
@@ -63,7 +63,17 @@ button {
     border-color: #f44336;
     color: white;
   }
+.button-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
 
+.button-row form {
+    margin: 0;
+    display: inline;
+}
 @keyframes slide {
   0% {
     transform:translateX(-25%);
