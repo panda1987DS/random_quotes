@@ -58,7 +58,7 @@ button {
     border-color: #4caf50;
     color: white;
   }
-  button:hover.refresh {
+  button:hover.blue {
     background-color: #5F9EA0;
     border-color: #5F9EA0;
     color: white;
@@ -87,3 +87,34 @@ button {
     transform:translateX(25%);
   }
 }
+table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        blockquote {
+            margin: 0;
+            font-style: italic;
+        }
+        .back-link {
+            display: block;
+            width: fit-content;
+            margin: 30px auto;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #eee;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        .back-link:hover {
+            background-color: #ddd;
+        }

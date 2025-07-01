@@ -5,6 +5,7 @@ from .forms import QuoteForm
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
+
 def random_quote(request):
     quotes = Quote.objects.all()
     if not quotes:
@@ -26,6 +27,7 @@ def add_quote(request):
         form = QuoteForm()
     return render(request, 'add.html', {'add': form})
 
+
 @require_POST
 def like_quote(request, quote_id):
     quote = Quote.objects.get(id=quote_id)
@@ -33,9 +35,15 @@ def like_quote(request, quote_id):
     quote.save()
     return JsonResponse({'likes': quote.likes})
 
+
 @require_POST
 def dislike_quote(request, quote_id):
     quote = Quote.objects.get(id=quote_id)
     quote.dislikes += 1
     quote.save()
     return JsonResponse({'dislikes': quote.dislikes})
+
+
+def top_quotes(request):
+    quotes = Quote.objects.order_by('-likes')[:10]
+    return render(request, 'top.html', {'quotes': quotes})

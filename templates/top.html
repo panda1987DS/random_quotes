@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Топ цитат</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=3">
+
+</head>
+<body>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+<div class="content">
+    <h1 style="text-align: center;">Топ-10 цитат</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>№</th>
+            <th>Цитата</th>
+            <th>Источник</th>
+            <th>👍</th>
+            <th>👎</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for quote in quotes %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <blockquote>{{ quote.text }}</blockquote>
+            </td>
+            <td><em>{{ quote.source }}</em></td>
+            <td>{{ quote.likes }}</td>
+            <td>{{ quote.dislikes }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="/" class="back-link">← Назад</a></div>
+>
+</body>
+</html>

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Рандомная цитата</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=3">
+
 </head>
 <body>
 <div class="bg"></div>
@@ -19,10 +20,9 @@
     <div class="button-row">
         <button class="like" data-id="{{ quote.id }}">❤️ <span id="likes-count-{{ quote.id }}">{{ quote.likes }}</span></button>
         <button class="dislike" data-id="{{ quote.id }}">😔 <span id="dislikes-count-{{ quote.id }}">{{ quote.dislikes }}</span></button>
-        <button class="refresh" id="refresh-btn">Другая цитата 🔄</button>
+        <button class="blue" id="refresh-btn">Другая цитата 🔄</button>
     </div>
-    <p>Добавьте новую цитату <a href="/add/">здесь</a>
-    <link rel="stylesheet" href="{% static 'style.css' %}?v=2">
+    <a href="/top/">Топ-10</a> |  <a href="/add/">Добавить цитату</a>
 
 </div>
 </body>
