@@ -1,10 +1,12 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'your-secret-key'
 ROOT_URLCONF = 'quotemachine.urls'
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,5 +50,8 @@ DATABASES = {
 }
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Куда соберётся статика
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Откуда брать
+]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

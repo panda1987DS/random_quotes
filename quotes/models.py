@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -12,14 +13,14 @@ class Quote(models.Model):
     dislikes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            if Quote.objects.filter(source=self.source).count() >= 3:
-                raise ValueError(
-                    "Нельзя добавить более 3 цитат из одного источника. Сначало удалите одну из старых цитат")
-            if Quote.objects.filter(source=self.source, text=self.text).count() > 0:
-                raise ValueError(
-                    "Такая цитата уже существует")
-
+        # if not self.pk:
+        #     if Quote.objects.filter(source=self.source).count() >= 3:
+        #         raise ValidationError(
+        #             "Нельзя добавить более 3 цитат из одного источника. Сначало удалите одну из старых цитат")
+        #     if Quote.objects.filter(source=self.source, text=self.text).count() > 0:
+        #         raise ValidationError(
+        #             "Такая цитата уже существует")
+        self.full_clean()
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -21,8 +21,11 @@ def add_quote(request):
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('random_quote')
+            try:
+                form.save()
+                return redirect('random_quote')
+            except form.ValidationError as e:
+                form.add_error(None, e)
     else:
         form = QuoteForm()
     return render(request, 'add.html', {'add': form})
