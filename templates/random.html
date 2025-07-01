@@ -19,7 +19,7 @@
     <div class="button-row">
         <button class="like" data-id="{{ quote.id }}">❤️ <span id="likes-count-{{ quote.id }}">{{ quote.likes }}</span></button>
         <button class="dislike" data-id="{{ quote.id }}">😔 <span id="dislikes-count-{{ quote.id }}">{{ quote.dislikes }}</span></button>
-
+        <button class="refresh" id="refresh-btn">Другая цитата 🔄</button>
     </div>
     <p>Добавьте новую цитату <a href="/add/">здесь</a>
     <link rel="stylesheet" href="{% static 'style.css' %}?v=2">
@@ -28,57 +28,5 @@
 </body>
 
 </html>
-<script>
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
-    for (let cookie of cookies) {
-      cookie = cookie.trim();
-      if (cookie.startsWith(name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
+<script src="{% static 'main.js' %}"></script>
 
-const csrftoken = getCookie('csrftoken');
-
-document.querySelectorAll('button.like').forEach(button => {
-  button.addEventListener('click', function() {
-    const id = this.dataset.id;
-    fetch(`/like/${id}/`, {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': csrftoken,
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById(`likes-count-${id}`).textContent = data.likes;
-    })
-    .catch(err => console.error(err));
-  });
-});
-
-document.querySelectorAll('button.dislike').forEach(button => {
-  button.addEventListener('click', function() {
-    const id = this.dataset.id;
-    fetch(`/dislike/${id}/`, {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': csrftoken,
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById(`dislikes-count-${id}`).textContent = data.dislikes;
-    })
-    .catch(err => console.error(err));
-  });
-});
-</script>
