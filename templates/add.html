@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Нет цитат</title>
+    <title>Добавить цитату</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
@@ -11,8 +11,9 @@
 <div class="bg bg2"></div>
 <div class="bg bg3"></div>
 <div class="content">
-    <h1>Нет цитат</h1>
-    <p>Добавьте первую цитату <a href="/add/">здесь</a>
+<h1>Добавить цитату</h1>
+<form method="post">{% csrf_token %}{{ add.as_p }}<button type="submit">Добавить</button></form>
+<a href="/">Назад</a>
 </div>
 </body>
 </html>

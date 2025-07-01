@@ -4,5 +4,6 @@ from quotes import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('add/', views.add_quote, name='add_quote'),
     path('', views.random_quote, name='random_quote')
-    ]
+]
