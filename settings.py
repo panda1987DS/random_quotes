@@ -3,7 +3,6 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 
-SECRET_KEY = 'I_want_a_job2025'
 ROOT_URLCONF = 'quotemachine.urls'
 DEBUG = False
 ALLOWED_HOSTS = ['your-app-name.onrender.com']
