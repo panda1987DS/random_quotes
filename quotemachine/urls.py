@@ -8,5 +8,7 @@ urlpatterns = [
     path('like/<int:quote_id>/', views.like_quote, name='like_quote'),
     path('dislike/<int:quote_id>/', views.dislike_quote, name='dislike_quote'),
     path('top/', views.top_quotes, name='top_quotes'),
+    path('edit/<int:quote_id>/', views.edit_quote, name='edit_quote'),
+    path('delete/<int:quote_id>/', views.delete_quote, name='delete_quote'),
     path('', views.random_quote, name='random_quote')
 ]

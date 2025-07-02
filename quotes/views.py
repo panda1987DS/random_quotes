@@ -1,7 +1,7 @@
 import random
 
 from django.db.models import F, ExpressionWrapper, IntegerField, Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Quote
@@ -85,3 +85,23 @@ def top_quotes(request):
         'current_sort': sort_param,
         'current_source': source_filter,
     })
+
+
+def edit_quote(request, quote_id):
+    quote = get_object_or_404(Quote, pk=quote_id)
+    if request.method == 'POST':
+        form = QuoteForm(request.POST, instance=quote)
+        if form.is_valid():
+            form.save()
+            return redirect('top_quotes')
+    else:
+        form = QuoteForm(instance=quote)
+    return render(request, 'edit.html', {'form': form, 'quote': quote})
+
+
+@require_POST
+def delete_quote(request, quote_id):
+    quote = get_object_or_404(Quote, pk=quote_id)
+    quote.delete()
+    print(quote)
+    return redirect('top_quotes')

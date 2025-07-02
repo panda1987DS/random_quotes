@@ -51,7 +51,7 @@
         {% for quote in quotes %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td><blockquote>{{ quote.text }}</blockquote></td>
+                <td><blockquote><a href="{% url 'edit_quote' quote.id %}">{{ quote.text|truncatewords:12 }}</a></blockquote></td>
                 <td><em>{{ quote.source }}</em></td>
                 <td><em>{{ quote.weight }}</em></td>
                 <td>{{ quote.likes }}</td>
