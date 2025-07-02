@@ -15,6 +15,8 @@ function getCookie(name) {
 
 const csrftoken = getCookie('csrftoken');
 
+// Attach click event listeners to all "like" buttons
+// Sends a POST request to increment the like count for the quote
 document.querySelectorAll('button.like').forEach(button => {
   button.addEventListener('click', function() {
     const id = this.dataset.id;
@@ -32,7 +34,8 @@ document.querySelectorAll('button.like').forEach(button => {
     .catch(err => console.error(err));
   });
 });
-
+// Attach click event listeners to all "dislike" buttons
+// Sends a POST request to increment the dislike count for the quote
 document.querySelectorAll('button.dislike').forEach(button => {
   button.addEventListener('click', function() {
     const id = this.dataset.id;

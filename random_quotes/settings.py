@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'your-secret-key'
+SECRET_KEY = 'I_want_a_job2025'
 ROOT_URLCONF = 'quotemachine.urls'
 DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']

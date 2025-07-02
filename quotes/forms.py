@@ -3,6 +3,15 @@ from .models import Quote
 
 
 class QuoteForm(forms.ModelForm):
+    """
+       Form for creating and editing Quote instances.
+
+       When editing an existing quote, the 'text' and 'source' fields are disabled (read-only).
+       The form validates:
+       - No more than 3 quotes can come from the same source (on creation).
+       - Duplicate quotes (same text and source) are not allowed (on creation).
+    """
+
     class Meta:
         model = Quote
         fields = ['text', 'source', 'weight']
