@@ -5,8 +5,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 ROOT_URLCONF = 'random_quotes.urls'
-DEBUG = True
-ALLOWED_HOSTS = ['your-app-name.onrender.com']
+DEBUG = False
+ALLOWED_HOSTS = ['random-quotes-95p3.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
