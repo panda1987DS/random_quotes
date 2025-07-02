@@ -4,40 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Топ цитат</title>
-    <link rel="stylesheet" href="{% static 'style.css'%}?v=4">
-
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=7">
 </head>
 <body>
 <div class="bg"></div>
 <div class="bg bg2"></div>
 <div class="bg bg3"></div>
-<div class="content">
-    <h1 style="text-align: center;">Топ-10 цитат</h1>
-    <table>
+<div>
+    <h1 style="text-align: center;">Топ-{{ current_limit }} цитат</h1>
+
+    <form method="get" style="text-align: center; margin-bottom: 20px;">
+        <label for="sort">Сортировка:</label>
+        <select name="sort" id="sort">
+            <option value="likes" {% if current_sort == 'likes' %}selected{% endif %}>Топ лайков</option>
+            <option value="dislikes" {% if current_sort == 'dislikes' %}selected{% endif %}>Топ дизлайков</option>
+            <option value="diff" {% if current_sort == 'diff' %}selected{% endif %}>Топ (лайки - дизлайки)</option>
+            <option value="views" {% if current_sort == 'views' %}selected{% endif %}>Топ просмотров</option>
+        </select>
+
+        <label for="limit">Количество:</label>
+        <select name="limit" id="limit">
+            {% for l in limits %}
+                <option value="{{ l }}" {% if l == current_limit %}selected{% endif %}>{{ l }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="source">Источник:</label>
+        <input type="text" name="source" id="source" value="{{ current_source }}" placeholder="Фильтр по источнику">
+
+        <button class="blue" type="submit">Показать</button>
+    </form>
+
+    <table style="background-color:rgba(255,255,255,.8)">
         <thead>
-        <tr>
-            <th>№</th>
-            <th>Цитата</th>
-            <th>Источник</th>
-            <th>👍</th>
-            <th>👎</th>
-        </tr>
+            <tr>
+                <th>№</th>
+                <th>Цитата</th>
+                <th>Источник</th>
+                <th>Вес</th>
+                <th>👍</th>
+                <th>👎</th>
+                <th>👁️</th>
+            </tr>
         </thead>
         <tbody>
         {% for quote in quotes %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
-                <blockquote>{{ quote.text }}</blockquote>
-            </td>
-            <td><em>{{ quote.source }}</em></td>
-            <td>{{ quote.likes }}</td>
-            <td>{{ quote.dislikes }}</td>
-        </tr>
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><blockquote>{{ quote.text }}</blockquote></td>
+                <td><em>{{ quote.source }}</em></td>
+                <td><em>{{ quote.weight }}</em></td>
+                <td>{{ quote.likes }}</td>
+                <td>{{ quote.dislikes }}</td>
+                <td>{{ quote.views }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">Цитаты не найдены</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a href="/" class="back-link">← Назад</a></div>
->
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="back-link">← Назад</a>
+    </div>
+</div>
 </body>
 </html>

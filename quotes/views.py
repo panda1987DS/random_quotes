@@ -1,9 +1,11 @@
 import random
+
+from django.db.models import F, ExpressionWrapper, IntegerField, Q
 from django.shortcuts import render, redirect
-from .models import Quote
-from .forms import QuoteForm
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from .models import Quote
+from .forms import QuoteForm
 
 
 def random_quote(request):
@@ -48,5 +50,38 @@ def dislike_quote(request, quote_id):
 
 
 def top_quotes(request):
-    quotes = Quote.objects.order_by('-likes')[:10]
-    return render(request, 'top.html', {'quotes': quotes})
+    sort_param = request.GET.get('sort', 'likes')
+    limit = request.GET.get('limit', '10')
+    source_filter = request.GET.get('source', '').strip()
+
+    try:
+        limit = int(limit)
+    except ValueError:
+        limit = 10
+
+    quotes = Quote.objects.all()
+
+    if source_filter:
+        quotes = quotes.filter(source__icontains=source_filter)
+
+    if sort_param == 'likes':
+        quotes = quotes.order_by('-likes')
+    elif sort_param == 'dislikes':
+        quotes = quotes.order_by('-dislikes')
+    elif sort_param == 'diff':
+        quotes = quotes.annotate(diff=F('likes') - F('dislikes')).order_by('-diff')
+    elif sort_param == 'views':
+        quotes = quotes.order_by('-views')
+    else:
+        quotes = quotes.order_by('-likes')
+
+    quotes = quotes[:limit]
+
+    limits = [5, 10, 15, 20]
+    return render(request, 'top.html', {
+        'quotes': quotes,
+        'limits': limits,
+        'current_limit': limit,
+        'current_sort': sort_param,
+        'current_source': source_filter,
+    })
