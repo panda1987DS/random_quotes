@@ -1,12 +1,12 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = 'I_want_a_job2025'
 ROOT_URLCONF = 'quotemachine.urls'
-DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+DEBUG = False
+ALLOWED_HOSTS = ['your-app-name.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

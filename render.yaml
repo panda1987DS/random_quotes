@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: random-quotes
+    env: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn random_quotes.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        value: your-secret-key
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: random-quotes.onrender.com
