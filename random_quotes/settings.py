@@ -1,10 +1,10 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-ROOT_URLCONF = 'quotemachine.urls'
-DEBUG = False
+ROOT_URLCONF = 'random_quotes.urls'
+DEBUG = True
 ALLOWED_HOSTS = ['your-app-name.onrender.com']
 
 INSTALLED_APPS = [
@@ -26,7 +26,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
-ROOT_URLCONF = 'quotemachine.urls'
+ROOT_URLCONF = 'random_quotes.urls'
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -49,8 +49,8 @@ DATABASES = {
 }
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Куда соберётся статика
+STATIC_ROOT = os.path.join(BASE_DIR, '../staticfiles')  # Куда соберётся статика
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Откуда брать
+    os.path.join(BASE_DIR, '../static'),  # Откуда брать
 ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
