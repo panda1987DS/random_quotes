@@ -42,3 +42,7 @@ class QuoteForm(forms.ModelForm):
             raise forms.ValidationError("Такая цитата уже существует.")
 
         return cleaned_data
+
+
+class UploadCSVForm(forms.Form):
+    csv_file = forms.FileField(label="Upload CSV file")

@@ -7,15 +7,16 @@ Includes functionality for:
 - liking/disliking quotes
 - showing top quotes with sorting and filtering
 """
-
+import csv
 import random
 
+from django.contrib import messages
 from django.db.models import F
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Quote
-from .forms import QuoteForm
+from .forms import QuoteForm, UploadCSVForm
 
 
 def random_quote(request):
@@ -115,3 +116,40 @@ def delete_quote(request, quote_id):
     quote.delete()
     print(quote)
     return redirect('top_quotes')
+
+
+def upload_csv(request):
+    if request.method == 'POST':
+        form = UploadCSVForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = form.cleaned_data['csv_file']
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.DictReader(decoded_file)
+            added = 0
+            skipped = 0
+            for row in reader:
+                text = row.get('text')
+                source = row.get('source')
+                weight = row.get('weight', 100)
+                try:
+                    weight = int(weight)
+                except (ValueError, TypeError):
+                    weight = 100
+
+                count_source = Quote.objects.filter(source=source).count()
+                if count_source >= 3:
+                    skipped += 1
+                    continue
+
+                if Quote.objects.filter(source=source, text=text).exists():
+                    skipped += 1
+                    continue
+
+                Quote.objects.create(text=text, source=source, weight=weight)
+                added += 1
+
+            messages.success(request, f'Добавлено: {added}, пропущено: {skipped}')
+            return redirect('upload_csv')
+    else:
+        form = UploadCSVForm()
+    return render(request, 'upload_csv.html', {'form': form})

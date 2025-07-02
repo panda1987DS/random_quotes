@@ -1,0 +1,37 @@
+<!-- templates/upload_csv.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Quotes CSV</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+
+    <div class="content">
+        <h1>Загрузка CSV</h1>
+        <p><strong>Формат:</strong> CSV с колонками <code>text</code> — текст цитаты, <code>source</code> — источник (макс. 200 символов), <code>weight</code> — число от 1 до 100.</p>
+
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="blue">Загрузить</button>
+        </form>
+
+        <a href="{% url 'top_quotes' %}">← Назад к топу</a>
+    </div>
+</body>
+</html>
